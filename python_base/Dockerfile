@@ -4,15 +4,15 @@ RUN python -m venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip3 install tensorflow 
-RUN pip3 install pandas 
-RUN pip3 install scikit-learn 
-RUN pip3 install jupyterlab 
-RUN pip3 install xlrd 
-RUN pip3 install seaborn 
-RUN pip3 install bokeh 
-RUN pip3 install tqdm 
-RUN pip3 install click 
+RUN pip install tensorflow 
+RUN pip install pandas 
+RUN pip install scikit-learn 
+RUN pip install jupyterlab 
+RUN pip install xlrd 
+RUN pip install seaborn 
+RUN pip install bokeh 
+RUN pip install tqdm 
+RUN pip install click 
 
 FROM python:3.8.7-slim AS build-image
 COPY --from=compile-image /opt/venv /opt/venv
