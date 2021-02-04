@@ -2,9 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 FROM python:3.7.9-slim
 
-ARG spark_version="3.0.0"
-ARG hadoop_version="3.2"
-ARG openjdk_version="11"
+ARG spark_version="2.3.2"
+ARG hadoop_version="2.7"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
     HADOOP_VERSION="${hadoop_version}"
@@ -13,9 +12,11 @@ RUN mkdir -p /usr/share/man/man1/
 
 RUN apt-get -y update && \
     apt-get install --no-install-recommends -y \
-    "openjdk-${openjdk_version}-jre-headless" \
-    ca-certificates-java \
-    wget && \
+    wget gnupg2 software-properties-common procps && \
+    wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
+    add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ &&\
+    apt-get update && \
+    apt-get install -y adoptopenjdk-8-hotspot &&\
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Spark installation
